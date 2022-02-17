@@ -1,7 +1,6 @@
 //SPDX-License-Identifier: Unlicense
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.4;
 
-// import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
@@ -22,5 +21,6 @@ contract CollateralBackedToken is ERC20 {
   function withdraw(uint256 tokenAmount) public {
     require(balanceOf(msg.sender) >= tokenAmount, "Insuficient Balance");
     _burn(msg.sender, tokenAmount);
+    collateral.transfer(msg.sender, tokenAmount / price);
   }
 }
